@@ -22,9 +22,6 @@ export default function Header() {
             <Link href="/reviews" className="text-sm font-medium hover:text-sky-500 transition-colors">
               Reviews
             </Link>
-            <Link href="/guides" className="text-sm font-medium hover:text-sky-500 transition-colors">
-              Guides
-            </Link>
             <Link href="/deals" className="text-sm font-medium hover:text-sky-500 transition-colors">
               Deals
             </Link>
