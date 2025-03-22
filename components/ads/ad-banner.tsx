@@ -21,8 +21,8 @@ export function AdBanner({ size, className = "", id }: AdBannerProps) {
         <iframe
           id="iframe_342"
           src="//a.impactradius-go.com/gen-ad-code/2406390/2840060/18023/"
-          width={width}
-          height={height}
+          width="300"
+          height="250"
           scrolling="no"
           frameBorder="0"
           marginHeight={0}
@@ -43,8 +43,8 @@ export function AdBanner({ size, className = "", id }: AdBannerProps) {
               src="//a.impactradius-go.com/display-ad/3736-276459"
               border="0"
               alt="Advertisement"
-              width={width}
-              height={height}
+              width="300"
+              height="250"
             />
           </a>
           <img
