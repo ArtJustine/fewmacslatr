@@ -1,48 +1,63 @@
 "use client"
 
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Search } from "lucide-react"
+import { Search, Twitter, Facebook, Instagram, Youtube } from "lucide-react"
 import { useState } from "react"
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <header className="border-b">
+    <header className="border-b sticky top-0 bg-white z-50">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-6">
-          <Link href="/" className="font-bold text-xl">
-            Apple<span className="text-sky-500">Blog</span>
+          <Link href="/" className="font-bold text-2xl">
+            Few Macs <span className="text-sky-500">Latr</span>
           </Link>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-sm font-medium">
-              Home
-            </Link>
-            <Link href="/news" className="text-sm font-medium">
+          <nav className="hidden md:flex items-center gap-8">
+            <Link href="/news" className="text-sm font-medium hover:text-sky-500 transition-colors">
               News
             </Link>
-            <Link href="/reviews" className="text-sm font-medium">
+            <Link href="/reviews" className="text-sm font-medium hover:text-sky-500 transition-colors">
               Reviews
             </Link>
-            <Link href="/guides" className="text-sm font-medium">
+            <Link href="/guides" className="text-sm font-medium hover:text-sky-500 transition-colors">
               Guides
             </Link>
-            <Link href="/about" className="text-sm font-medium">
-              About
+            <Link href="/deals" className="text-sm font-medium hover:text-sky-500 transition-colors">
+              Deals
             </Link>
           </nav>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-5">
+          <div className="hidden md:flex items-center gap-4">
+            <Link href="https://twitter.com" className="text-gray-500 hover:text-sky-500 transition-colors">
+              <Twitter className="h-5 w-5" />
+              <span className="sr-only">Twitter</span>
+            </Link>
+            <Link href="https://facebook.com" className="text-gray-500 hover:text-sky-500 transition-colors">
+              <Facebook className="h-5 w-5" />
+              <span className="sr-only">Facebook</span>
+            </Link>
+            <Link href="https://instagram.com" className="text-gray-500 hover:text-sky-500 transition-colors">
+              <Instagram className="h-5 w-5" />
+              <span className="sr-only">Instagram</span>
+            </Link>
+            <Link href="https://youtube.com" className="text-gray-500 hover:text-sky-500 transition-colors">
+              <Youtube className="h-5 w-5" />
+              <span className="sr-only">YouTube</span>
+            </Link>
+          </div>
           <div className="hidden md:flex relative">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input type="search" placeholder="Search..." className="w-[200px] pl-8" />
+            <Input
+              type="search"
+              placeholder="Search..."
+              className="w-[200px] pl-8 rounded-full border-gray-200 focus:border-sky-500 focus:ring-sky-500"
+            />
           </div>
-          <Button size="sm" className="hidden md:flex">
-            Subscribe
-          </Button>
-          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             <span className="sr-only">Toggle menu</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -75,16 +90,13 @@ export default function Header() {
               <path d="M18 6 6 18" />
               <path d="m6 6 12 12" />
             </svg>
-          </Button>
+          </button>
         </div>
       </div>
       {isMenuOpen && (
         <div className="md:hidden border-t">
           <div className="container py-4">
             <nav className="flex flex-col gap-4">
-              <Link href="/" className="text-sm font-medium">
-                Home
-              </Link>
               <Link href="/news" className="text-sm font-medium">
                 News
               </Link>
@@ -94,16 +106,27 @@ export default function Header() {
               <Link href="/guides" className="text-sm font-medium">
                 Guides
               </Link>
-              <Link href="/about" className="text-sm font-medium">
-                About
+              <Link href="/deals" className="text-sm font-medium">
+                Deals
               </Link>
-              <div className="relative mt-2">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input type="search" placeholder="Search..." className="w-full pl-8" />
+              <div className="flex items-center gap-4 mt-4">
+                <Link href="https://twitter.com" className="text-gray-500 hover:text-sky-500">
+                  <Twitter className="h-5 w-5" />
+                </Link>
+                <Link href="https://facebook.com" className="text-gray-500 hover:text-sky-500">
+                  <Facebook className="h-5 w-5" />
+                </Link>
+                <Link href="https://instagram.com" className="text-gray-500 hover:text-sky-500">
+                  <Instagram className="h-5 w-5" />
+                </Link>
+                <Link href="https://youtube.com" className="text-gray-500 hover:text-sky-500">
+                  <Youtube className="h-5 w-5" />
+                </Link>
               </div>
-              <Button size="sm" className="mt-2">
-                Subscribe
-              </Button>
+              <div className="relative mt-4">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input type="search" placeholder="Search..." className="w-full pl-8 rounded-full" />
+              </div>
             </nav>
           </div>
         </div>
