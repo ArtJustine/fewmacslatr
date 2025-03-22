@@ -225,7 +225,7 @@ export default function Home() {
             </div>
 
             {/* Sidebar Ad */}
-            <AdBanner size="320x280" id="sidebar-rectangle" />
+            <AdBanner size="300x250" id="sidebar-rectangle" />
 
             {/* Hot Deals */}
             <div className="bg-gradient-to-r from-red-50 to-orange-50 p-6 rounded-xl">
@@ -264,7 +264,7 @@ export default function Home() {
             </div>
 
             {/* Second Sidebar Ad */}
-            <AdBanner size="320x280" id="sidebar-rectangle-2" />
+            <AdBanner size="300x250" id="sidebar-rectangle-2" />
 
             {/* Follow Us */}
             <div className="bg-gray-50 p-6 rounded-xl">
