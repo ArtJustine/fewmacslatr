@@ -9,13 +9,19 @@ import { newsPosts, getPostsBySubcategory, getFeaturedPostForSubcategory } from 
 import { notFound } from "next/navigation"
 
 export function generateStaticParams() {
-  return subcategories.map((subcategory) => ({
-    subcategory: subcategory.slug,
-  }))
+  if (Array.isArray(subcategories)) {
+    return subcategories.map((subcategory) => ({
+      subcategory: subcategory.slug,
+    }));
+  } else {
+    console.error("subcategories is not an array or is undefined");
+    return []; // Return an empty array to avoid build failure, or handle the error appropriately.
+  }
 }
 
 export default function NewsSubcategoryPage({ params }: { params: { subcategory: string } }) {
-  // Validate subcategory exists
+  // ... rest of your component code ...
+}  // Validate subcategory exists
   const subcategory = subcategories.find((s) => s.slug === params.subcategory)
   if (!subcategory) {
     notFound()
