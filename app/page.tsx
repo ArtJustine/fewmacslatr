@@ -9,10 +9,10 @@ import { AdBanner } from "@/components/ads/ad-banner"
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen max-w-full overflow-x-hidden">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-sky-50 to-blue-50 py-12 md:py-16 border-b">
-        <div className="container grid md:grid-cols-2 gap-8 items-center">
+      <section className="bg-gradient-to-r from-sky-50 to-blue-50 py-8 md:py-16 border-b">
+        <div className="container px-4 grid md:grid-cols-2 gap-8 items-center">
           <div className="space-y-5">
             <span className="inline-block px-3 py-1 bg-sky-100 text-sky-800 rounded-full text-xs font-medium">
               LATEST NEWS
@@ -40,8 +40,8 @@ export default function Home() {
       </section>
 
       {/* Main Content */}
-      <div className="container py-12 md:py-16">
-        <div className="grid lg:grid-cols-3 gap-10">
+      <div className="container py-8 md:py-16 px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
           {/* Main Content Area */}
           <div className="lg:col-span-2 space-y-16">
             {/* Trending Section */}
@@ -52,10 +52,10 @@ export default function Home() {
                   View All <ChevronRight className="h-4 w-4 ml-1" />
                 </Link>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 gap-6 md:gap-8">
                 <Link href={`/news/${newsPosts[0].subcategory}/${newsPosts[0].slug}`}>
                   <Card className="overflow-hidden border-0 shadow-lg">
-                    <div className="relative h-[220px]">
+                    <div className="relative h-[180px] md:h-[220px]">
                       <Image
                         src={newsPosts[0].image || "/placeholder.svg"}
                         alt={newsPosts[0].title}
@@ -110,7 +110,7 @@ export default function Home() {
                   View All <ChevronRight className="h-4 w-4 ml-1" />
                 </Link>
               </div>
-              <div className="grid md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {reviewPosts.slice(0, 3).map((review, index) => (
                   <Card key={index} className="overflow-hidden border-0 shadow-md hover:shadow-lg transition-shadow">
                     <Link href={`/reviews/${review.subcategory}/${review.slug}`}>
@@ -147,11 +147,14 @@ export default function Home() {
                   View All <ChevronRight className="h-4 w-4 ml-1" />
                 </Link>
               </div>
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {guidePosts.slice(0, 4).map((guide, index) => (
                   <Card key={index} className="overflow-hidden border-0 shadow-md hover:shadow-lg transition-shadow">
-                    <Link href={`/guides/${guide.subcategory}/${guide.slug}`} className="flex h-full">
-                      <div className="relative w-1/3 flex-shrink-0">
+                    <Link
+                      href={`/guides/${guide.subcategory}/${guide.slug}`}
+                      className="flex flex-col sm:flex-row h-full"
+                    >
+                      <div className="relative w-full sm:w-1/3 h-[140px] sm:h-auto flex-shrink-0">
                         <Image
                           src={guide.image || "/placeholder.svg"}
                           alt={guide.title}
@@ -175,15 +178,15 @@ export default function Home() {
             </section>
 
             {/* Newsletter Section */}
-            <section className="bg-gradient-to-r from-sky-50 to-blue-50 p-8 rounded-xl">
+            <section className="bg-gradient-to-r from-sky-50 to-blue-50 p-6 md:p-8 rounded-xl">
               <div className="max-w-xl">
-                <h2 className="text-2xl font-bold mb-3">Stay Updated with Apple News</h2>
-                <p className="text-muted-foreground mb-5">
+                <h2 className="text-xl md:text-2xl font-bold mb-3">Stay Updated with Apple News</h2>
+                <p className="text-muted-foreground mb-5 text-sm md:text-base">
                   Subscribe to our newsletter to receive the latest updates directly in your inbox
                 </p>
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <Input placeholder="Enter your email" className="max-w-md rounded-full" />
-                  <Button className="rounded-full">Subscribe</Button>
+                  <Button className="rounded-full mt-2 sm:mt-0">Subscribe</Button>
                 </div>
               </div>
             </section>
@@ -269,7 +272,7 @@ export default function Home() {
             {/* Follow Us */}
             <div className="bg-gray-50 p-6 rounded-xl">
               <h3 className="text-lg font-bold mb-4">Follow Us</h3>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 <Link
                   href="https://twitter.com"
                   className="flex flex-col items-center p-3 bg-white rounded-lg hover:bg-sky-50 transition-colors"
@@ -386,3 +389,4 @@ function Youtube(props) {
     </svg>
   )
 }
+
