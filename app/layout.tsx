@@ -4,32 +4,39 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import Header from "@/components/header"
+import Footer from "@/components/footer"
+import { AdBanner } from "@/components/ads/ad-banner"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Apple Blog - Latest News and Innovations",
+  title: "Few Macs Latr - Latest Apple News and Innovations",
   description: "Stay updated with the latest Apple news, product reviews, and tech innovations",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light">
           <Header />
+          {/* Leaderboard ad below header */}
+          <div className="container py-4">
+            <AdBanner size="970x90" id="header-leaderboard" />
+          </div>
           <main>{children}</main>
+          {/* Leaderboard ad above footer */}
+          <div className="container py-4">
+            <AdBanner size="970x90" id="footer-leaderboard" />
+          </div>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
   )
 }
 
-
-
-import './globals.css'
