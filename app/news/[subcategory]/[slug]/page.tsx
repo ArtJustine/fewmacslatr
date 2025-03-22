@@ -1,58 +1,40 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ChevronLeft, Share2 } from "lucide-react"
-import { newsPosts, getPostsBySubcategory } from "@/data/posts"
-import { subcategories } from "@/components/subcategory-nav"
+import { Share2 } from "lucide-react"
+import { newsPosts } from "@/data/posts"
 import { notFound } from "next/navigation"
 import { AdBanner } from "@/components/ads/ad-banner"
 
 export default function NewsArticlePage({ params }: { params: { subcategory: string; slug: string } }) {
-  // Validate subcategory exists
-  const subcategory = subcategories.find((s) => s.slug === params.subcategory)
-  if (!subcategory) {
-    notFound()
-  }
-
   // Find the post
   const post = newsPosts.find((post) => post.slug === params.slug && post.subcategory === params.subcategory)
 
   if (!post) {
-    return (
-      <div className="container py-12 text-center">
-        <h1 className="text-2xl font-bold mb-4">Article Not Found</h1>
-        <p className="mb-6">The article you're looking for doesn't exist or has been moved.</p>
-        <Link href={`/news/${params.subcategory}`}>
-          <Button>
-            <ChevronLeft className="h-4 w-4 mr-2" />
-            Back to {subcategory.name} News
-          </Button>
-        </Link>
-      </div>
-    )
+    return notFound()
   }
 
-  // Get related posts from the same subcategory
-  const relatedPosts = getPostsBySubcategory(newsPosts, params.subcategory)
-    .filter((p) => p.slug !== params.slug)
+  // Get related posts from the same subcategory (excluding current article)
+  const relatedPosts = newsPosts
+    .filter((p) => p.subcategory === params.subcategory && p.slug !== params.slug)
     .slice(0, 3)
 
   // Get latest news (excluding current article)
   const latestNews = newsPosts.filter((p) => p.slug !== params.slug).slice(0, 4)
 
   return (
-    <div className="container py-8 md:py-12">
+    <div className="container py-8 md:py-12 px-4">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
         <div className="lg:col-span-2">
           {/* Breadcrumb */}
           <div className="mb-6">
             <div className="flex items-center text-sm text-muted-foreground">
-              <Link href="/news" className="hover:text-foreground">
-                News
+              <Link href="/" className="hover:text-foreground">
+                Home
               </Link>
               <span className="mx-2">/</span>
-              <Link href={`/news/${params.subcategory}`} className="hover:text-foreground">
-                {subcategory.name}
+              <Link href="/news" className="hover:text-foreground">
+                News
               </Link>
               <span className="mx-2">/</span>
               <span className="text-foreground truncate">{post.title}</span>
@@ -61,7 +43,7 @@ export default function NewsArticlePage({ params }: { params: { subcategory: str
 
           {/* Article Header */}
           <div className="mb-8">
-            <div className="text-sm text-sky-500 font-medium mb-2">{post.category}</div>
+            <div className="text-sm text-sky-500 font-medium mb-2">{post.category || "News"}</div>
             <h1 className="text-3xl md:text-4xl font-bold mb-4">{post.title}</h1>
             <div className="text-muted-foreground mb-6">
               By {post.author || "Apple Insider Staff"} • {post.date}
@@ -198,70 +180,74 @@ export default function NewsArticlePage({ params }: { params: { subcategory: str
           </div>
 
           {/* Related Articles */}
-          <div className="mt-12 pt-8 border-t">
-            <h3 className="text-xl font-bold mb-4">Related Articles</h3>
-            <div className="grid md:grid-cols-3 gap-6">
-              {relatedPosts.map((relatedPost) => (
-                <div key={relatedPost.slug} className="border rounded-lg overflow-hidden">
-                  <div className="relative h-[150px]">
-                    <Image
-                      src={relatedPost.image || "/placeholder.svg"}
-                      alt={relatedPost.title}
-                      fill
-                      className="object-cover"
-                    />
+          {relatedPosts.length > 0 && (
+            <div className="mt-12 pt-8 border-t">
+              <h3 className="text-xl font-bold mb-4">Related Articles</h3>
+              <div className="grid md:grid-cols-3 gap-6">
+                {relatedPosts.map((relatedPost) => (
+                  <div key={relatedPost.slug} className="border rounded-lg overflow-hidden">
+                    <div className="relative h-[150px]">
+                      <Image
+                        src={relatedPost.image || "/placeholder.svg"}
+                        alt={relatedPost.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h4 className="font-bold mb-2 line-clamp-2">{relatedPost.title}</h4>
+                      <Link href={`/news/${relatedPost.subcategory}/${relatedPost.slug}`}>
+                        <Button variant="outline" size="sm">
+                          Read Article
+                        </Button>
+                      </Link>
+                    </div>
                   </div>
-                  <div className="p-4">
-                    <h4 className="font-bold mb-2 line-clamp-2">{relatedPost.title}</h4>
-                    <Link href={`/news/${params.subcategory}/${relatedPost.slug}`}>
-                      <Button variant="outline" size="sm">
-                        Read Article
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Sidebar */}
         <div className="space-y-8">
           {/* Latest News */}
-          <div className="bg-gray-50 p-6 rounded-xl">
-            <h3 className="text-lg font-bold mb-4 pb-2 border-b">Latest News</h3>
-            <div className="space-y-4">
-              {latestNews.map((article) => (
-                <Link
-                  key={article.slug}
-                  href={`/news/${article.subcategory}/${article.slug}`}
-                  className="flex gap-3 group"
-                >
-                  <div className="relative w-16 h-16 flex-shrink-0 rounded-md overflow-hidden">
-                    <Image
-                      src={article.image || "/placeholder.svg"}
-                      alt={article.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-sm mb-1 group-hover:text-sky-600 transition-colors line-clamp-2">
-                      {article.title}
-                    </h4>
-                    <div className="text-xs text-muted-foreground">{article.date}</div>
-                  </div>
+          {latestNews.length > 0 && (
+            <div className="bg-gray-50 p-6 rounded-xl">
+              <h3 className="text-lg font-bold mb-4 pb-2 border-b">Latest News</h3>
+              <div className="space-y-4">
+                {latestNews.map((article) => (
+                  <Link
+                    key={article.slug}
+                    href={`/news/${article.subcategory}/${article.slug}`}
+                    className="flex gap-3 group"
+                  >
+                    <div className="relative w-16 h-16 flex-shrink-0 rounded-md overflow-hidden">
+                      <Image
+                        src={article.image || "/placeholder.svg"}
+                        alt={article.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-sm mb-1 group-hover:text-sky-600 transition-colors line-clamp-2">
+                        {article.title}
+                      </h4>
+                      <div className="text-xs text-muted-foreground">{article.date}</div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+              <div className="mt-4 pt-4 border-t">
+                <Link href="/news">
+                  <Button variant="outline" size="sm" className="w-full">
+                    View All News
+                  </Button>
                 </Link>
-              ))}
+              </div>
             </div>
-            <div className="mt-4 pt-4 border-t">
-              <Link href="/news">
-                <Button variant="outline" size="sm" className="w-full">
-                  View All News
-                </Button>
-              </Link>
-            </div>
-          </div>
+          )}
 
           {/* Sidebar Ad */}
           <AdBanner size="300x250" id="news-sidebar-rectangle" />
