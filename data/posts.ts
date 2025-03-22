@@ -7,7 +7,7 @@ export const newsPosts = [
         "Apple is facing a lawsuit over its marketing of Apple Intelligence features, which were heavily promoted but later delayed. The lawsuit claims customers were misled into buying devices expecting AI capabilities that were not available at launch.",
       author: "Art Gonzales",
       date: "March 22, 2025",
-      image: "/placeholder.svg?height=500&width=800",
+      image: "/apple-sued-over-apple-intelligence.webp?height=500&width=800",
       category: "Apple News",
     },
     {
