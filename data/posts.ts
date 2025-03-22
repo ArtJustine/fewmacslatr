@@ -412,4 +412,11 @@ export const newsPosts = [
     },
   ]
   
-  
+  export function getPostsBySubcategory(posts: any[], subcategory: string): any[] {
+  return posts.filter((post) => post.category.toLowerCase() === subcategory.toLowerCase());
+}
+
+// Function to get the featured post for a subcategory
+export function getFeaturedPostForSubcategory(posts: any[], subcategory: string): any | undefined {
+  return posts.find((post) => post.category.toLowerCase() === subcategory.toLowerCase());
+}
