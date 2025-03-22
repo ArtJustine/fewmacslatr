@@ -191,7 +191,37 @@ export default function Home() {
 
           {/* Sidebar */}
           <div className="space-y-8">
-
+            {/* Popular Posts */}
+            <div className="bg-gray-50 p-6 rounded-xl">
+              <h3 className="text-lg font-bold mb-4 pb-2 border-b">Popular This Week</h3>
+              <div className="space-y-4">
+                {[...newsPosts, ...reviewPosts].slice(0, 5).map((article, index) => (
+                  <Link
+                    key={index}
+                    href={
+                      article.category === "Reviews"
+                        ? `/reviews/${article.subcategory}/${article.slug}`
+                        : `/news/${article.subcategory}/${article.slug}`
+                    }
+                    className="flex gap-3 group"
+                  >
+                    <div className="relative w-16 h-16 flex-shrink-0 rounded-md overflow-hidden">
+                      <Image
+                        src={article.image || "/placeholder.svg"}
+                        alt={article.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-sm mb-1 group-hover:text-sky-600 transition-colors line-clamp-2">
+                        {article.title}
+                      </h4>
+                      <div className="text-xs text-muted-foreground">{article.date}</div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
 
             {/* Sidebar Ad */}
@@ -232,38 +262,6 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-
-            {/* Popular Posts */}
-            <div className="bg-gray-50 p-6 rounded-xl">
-              <h3 className="text-lg font-bold mb-4 pb-2 border-b">Popular This Week</h3>
-              <div className="space-y-4">
-                {[...newsPosts, ...reviewPosts].slice(0, 5).map((article, index) => (
-                  <Link
-                    key={index}
-                    href={
-                      article.category === "Reviews"
-                        ? `/reviews/${article.subcategory}/${article.slug}`
-                        : `/news/${article.subcategory}/${article.slug}`
-                    }
-                    className="flex gap-3 group"
-                  >
-                    <div className="relative w-16 h-16 flex-shrink-0 rounded-md overflow-hidden">
-                      <Image
-                        src={article.image || "/placeholder.svg"}
-                        alt={article.title}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-sm mb-1 group-hover:text-sky-600 transition-colors line-clamp-2">
-                        {article.title}
-                      </h4>
-                      <div className="text-xs text-muted-foreground">{article.date}</div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
 
             {/* Second Sidebar Ad */}
             <AdBanner size="300x250" id="sidebar-rectangle-2" />
@@ -388,4 +386,3 @@ function Youtube(props) {
     </svg>
   )
 }
-
