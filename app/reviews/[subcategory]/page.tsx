@@ -1,31 +1,45 @@
-import Image from "next/image"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { ChevronRight, Star } from "lucide-react"
-import { PostCard } from "@/components/post-card"
-import { SubcategoryNav, subcategories } from "@/components/subcategory-nav"
-import { reviewPosts, getPostsBySubcategory, getFeaturedPostForSubcategory } from "@/data/posts"
-import { notFound } from "next/navigation"
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { ChevronRight, Star } from "lucide-react";
+import { PostCard } from "@/components/post-card";
+import { SubcategoryNav, subcategories } from "@/components/subcategory-nav";
+import {
+  reviewPosts,
+  getPostsBySubcategory,
+  getFeaturedPostForSubcategory,
+} from "@/data/posts";
+import { notFound } from "next/navigation";
 
 export function generateStaticParams() {
-  return subcategories.map((subcategory) => ({
-    subcategory: subcategory.slug,
-  }))
+  console.log("subcategories:", subcategories); // Debugging: Check subcategories value
+  if (Array.isArray(subcategories)) {
+    return subcategories.map((subcategory) => ({
+      subcategory: subcategory.slug,
+    }));
+  } else {
+    console.error("subcategories is not an array or is undefined");
+    return []; // Return an empty array to prevent build errors
+  }
 }
 
-export default function ReviewsSubcategoryPage({ params }: { params: { subcategory: string } }) {
+export default function ReviewsSubcategoryPage({
+  params,
+}: {
+  params: { subcategory: string };
+}) {
   // Validate subcategory exists
-  const subcategory = subcategories.find((s) => s.slug === params.subcategory)
+  const subcategory = subcategories.find((s) => s.slug === params.subcategory);
   if (!subcategory) {
-    notFound()
+    notFound();
   }
 
   // Get posts for this subcategory
-  const subcategoryPosts = getPostsBySubcategory(reviewPosts, params.subcategory)
+  const subcategoryPosts = getPostsBySubcategory(reviewPosts, params.subcategory);
 
   // Get featured post
-  const featuredPost = getFeaturedPostForSubcategory(reviewPosts, params.subcategory)
+  const featuredPost = getFeaturedPostForSubcategory(reviewPosts, params.subcategory);
 
   if (subcategoryPosts.length === 0) {
     return (
@@ -33,13 +47,15 @@ export default function ReviewsSubcategoryPage({ params }: { params: { subcatego
         <SubcategoryNav category="reviews" className="mb-8" />
         <div className="text-center py-12">
           <h1 className="text-2xl font-bold mb-4">No Reviews Found</h1>
-          <p className="text-muted-foreground mb-6">We don't have any reviews for {subcategory.name} yet.</p>
+          <p className="text-muted-foreground mb-6">
+            We don't have any reviews for {subcategory.name} yet.
+          </p>
           <Link href="/reviews">
             <Button>View All Reviews</Button>
           </Link>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -49,10 +65,13 @@ export default function ReviewsSubcategoryPage({ params }: { params: { subcatego
 
       {/* Page Header */}
       <div className="mb-8 md:mb-12">
-        <h1 className="text-3xl md:text-4xl font-bold mb-4">{subcategory.name} Reviews</h1>
+        <h1 className="text-3xl md:text-4xl font-bold mb-4">
+          {subcategory.name} Reviews
+        </h1>
         <p className="text-muted-foreground max-w-3xl">
-          In-depth reviews and analysis of Apple's {subcategory.name} products. Our expert team tests and evaluates
-          every feature to help you make informed decisions.
+          In-depth reviews and analysis of Apple's {subcategory.name} products.
+          Our expert team tests and evaluates every feature to help you make
+          informed decisions.
         </p>
       </div>
 
@@ -70,20 +89,30 @@ export default function ReviewsSubcategoryPage({ params }: { params: { subcatego
                 />
               </div>
               <div className="p-6 md:w-1/2 md:flex md:flex-col md:justify-center">
-                <div className="text-sm text-sky-500 font-medium mb-2">FEATURED REVIEW</div>
+                <div className="text-sm text-sky-500 font-medium mb-2">
+                  FEATURED REVIEW
+                </div>
                 <h2 className="text-2xl font-bold mb-3">{featuredPost.title}</h2>
                 {featuredPost.rating && (
                   <div className="flex items-center mb-3">
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
-                        className={`h-4 w-4 ${i < featuredPost.rating ? "text-yellow-500 fill-yellow-500" : "text-gray-300"}`}
+                        className={`h-4 w-4 ${
+                          i < featuredPost.rating
+                            ? "text-yellow-500 fill-yellow-500"
+                            : "text-gray-300"
+                        }`}
                       />
                     ))}
-                    <span className="ml-2 text-sm font-medium">{featuredPost.rating}/5</span>
+                    <span className="ml-2 text-sm font-medium">
+                      {featuredPost.rating}/5
+                    </span>
                   </div>
                 )}
-                <p className="text-muted-foreground mb-4">{featuredPost.excerpt}</p>
+                <p className="text-muted-foreground mb-4">
+                  {featuredPost.excerpt}
+                </p>
                 <div className="text-sm text-muted-foreground mb-4">
                   {featuredPost.author} • {featuredPost.date}
                 </div>
@@ -99,15 +128,24 @@ export default function ReviewsSubcategoryPage({ params }: { params: { subcatego
       {/* Latest Reviews */}
       <div className="mb-12">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">Latest {subcategory.name} Reviews</h2>
+          <h2 className="text-2xl font-bold">
+            Latest {subcategory.name} Reviews
+          </h2>
           <Button variant="ghost" size="sm" className="gap-1">
             View All <ChevronRight className="h-4 w-4" />
           </Button>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {subcategoryPosts.slice(featuredPost ? 1 : 0, 7).map((post) => (
-            <PostCard key={post.slug} post={post} category={`reviews/${params.subcategory}`} showRating />
-          ))}
+          {subcategoryPosts
+            .slice(featuredPost ? 1 : 0, 7)
+            .map((post) => (
+              <PostCard
+                key={post.slug}
+                post={post}
+                category={`reviews/${params.subcategory}`}
+                showRating
+              />
+            ))}
         </div>
       </div>
 
@@ -115,19 +153,25 @@ export default function ReviewsSubcategoryPage({ params }: { params: { subcatego
       {subcategoryPosts.length > 7 && (
         <div>
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold">{subcategory.name} Comparisons</h2>
+            <h2 className="text-2xl font-bold">
+              {subcategory.name} Comparisons
+            </h2>
             <Button variant="ghost" size="sm" className="gap-1">
               View All <ChevronRight className="h-4 w-4" />
             </Button>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {subcategoryPosts.slice(7, 13).map((post) => (
-              <PostCard key={post.slug} post={post} category={`reviews/${params.subcategory}`} showRating />
+              <PostCard
+                key={post.slug}
+                post={post}
+                category={`reviews/${params.subcategory}`}
+                showRating
+              />
             ))}
           </div>
         </div>
       )}
     </div>
-  )
+  );
 }
-
