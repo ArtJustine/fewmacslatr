@@ -4,9 +4,21 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ChevronRight } from "lucide-react"
 import { PostCard } from "@/components/post-card"
-import { SubcategoryNav, subcategories } from "@/components/subcategory-nav"
+import { SubcategoryNav } from "@/components/subcategory-nav"
 import { newsPosts, getPostsBySubcategory, getFeaturedPostForSubcategory } from "@/data/posts"
 import { notFound } from "next/navigation"
+
+// Import subcategories directly
+const subcategories = [
+  { slug: "iphone", name: "iPhone" },
+  { slug: "mac", name: "Mac" },
+  { slug: "ipad", name: "iPad" },
+  { slug: "apple-watch", name: "Apple Watch" },
+  { slug: "airpods", name: "AirPods" },
+  { slug: "home", name: "Home" },
+  { slug: "services", name: "Services" },
+  { slug: "accessories", name: "Accessories" },
+]
 
 export function generateStaticParams() {
   return subcategories.map((subcategory) => ({
