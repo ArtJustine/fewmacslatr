@@ -3,9 +3,38 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft } from "lucide-react"
 import { newsPosts, getPostsBySubcategory } from "@/data/posts"
-import { subcategories } from "@/components/subcategory-nav"
 import { notFound } from "next/navigation"
 import { AdBanner } from "@/components/ads/ad-banner"
+
+// Define subcategories directly to avoid import issues
+const subcategories = [
+  { slug: "iphone", name: "iPhone" },
+  { slug: "mac", name: "Mac" },
+  { slug: "ipad", name: "iPad" },
+  { slug: "apple-watch", name: "Apple Watch" },
+  { slug: "airpods", name: "AirPods" },
+  { slug: "home", name: "Home" },
+  { slug: "services", name: "Services" },
+  { slug: "accessories", name: "Accessories" },
+]
+
+// Add generateStaticParams to pre-render all possible article pages
+export function generateStaticParams() {
+  const paths = []
+
+  subcategories.forEach((subcategory) => {
+    const subcategoryPosts = newsPosts.filter((post) => post.subcategory === subcategory.slug)
+
+    subcategoryPosts.forEach((post) => {
+      paths.push({
+        subcategory: subcategory.slug,
+        slug: post.slug,
+      })
+    })
+  })
+
+  return paths
+}
 
 export default function NewsArticlePage({ params }: { params: { subcategory: string; slug: string } }) {
   // Validate subcategory exists
