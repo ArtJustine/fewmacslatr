@@ -1,8 +1,8 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ChevronLeft, Clock } from "lucide-react"
-import { guidePosts, getPostsBySubcategory } from "@/data/posts"
+import { ChevronLeft, Star } from "lucide-react"
+import { reviewPosts, getPostsBySubcategory } from "@/data/posts"
 import { notFound } from "next/navigation"
 import { AdBanner } from "@/components/ads/ad-banner"
 
@@ -23,7 +23,7 @@ export function generateStaticParams() {
   const paths = []
 
   subcategories.forEach((subcategory) => {
-    const subcategoryPosts = guidePosts.filter((post) => post.subcategory === subcategory.slug)
+    const subcategoryPosts = reviewPosts.filter((post) => post.subcategory === subcategory.slug)
 
     subcategoryPosts.forEach((post) => {
       paths.push({
@@ -36,7 +36,7 @@ export function generateStaticParams() {
   return paths
 }
 
-export default function GuideArticlePage({ params }: { params: { subcategory: string; slug: string } }) {
+export default function ReviewArticlePage({ params }: { params: { subcategory: string; slug: string } }) {
   // Validate subcategory exists
   const subcategory = subcategories.find((s) => s.slug === params.subcategory)
   if (!subcategory) {
@@ -44,17 +44,17 @@ export default function GuideArticlePage({ params }: { params: { subcategory: st
   }
 
   // Find the post
-  const post = guidePosts.find((post) => post.slug === params.slug && post.subcategory === params.subcategory)
+  const post = reviewPosts.find((post) => post.slug === params.slug && post.subcategory === params.subcategory)
 
   if (!post) {
     return (
       <div className="container py-12 text-center">
-        <h1 className="text-2xl font-bold mb-4">Guide Not Found</h1>
-        <p className="mb-6">The guide you're looking for doesn't exist or has been moved.</p>
-        <Link href={`/guides/${params.subcategory}`}>
+        <h1 className="text-2xl font-bold mb-4">Review Not Found</h1>
+        <p className="mb-6">The review you're looking for doesn't exist or has been moved.</p>
+        <Link href={`/reviews/${params.subcategory}`}>
           <Button>
             <ChevronLeft className="h-4 w-4 mr-2" />
-            Back to {subcategory.name} Guides
+            Back to {subcategory.name} Reviews
           </Button>
         </Link>
       </div>
@@ -62,7 +62,7 @@ export default function GuideArticlePage({ params }: { params: { subcategory: st
   }
 
   // Get related posts from the same subcategory
-  const relatedPosts = getPostsBySubcategory(guidePosts, params.subcategory)
+  const relatedPosts = getPostsBySubcategory(reviewPosts, params.subcategory)
     .filter((p) => p.slug !== params.slug)
     .slice(0, 3)
 
@@ -72,11 +72,11 @@ export default function GuideArticlePage({ params }: { params: { subcategory: st
         {/* Breadcrumb */}
         <div className="mb-6">
           <div className="flex items-center text-sm text-muted-foreground">
-            <Link href="/guides" className="hover:text-foreground">
-              Guides
+            <Link href="/reviews" className="hover:text-foreground">
+              Reviews
             </Link>
             <span className="mx-2">/</span>
-            <Link href={`/guides/${params.subcategory}`} className="hover:text-foreground">
+            <Link href={`/reviews/${params.subcategory}`} className="hover:text-foreground">
               {subcategory.name}
             </Link>
             <span className="mx-2">/</span>
@@ -84,15 +84,20 @@ export default function GuideArticlePage({ params }: { params: { subcategory: st
           </div>
         </div>
 
-        {/* Guide Header */}
+        {/* Review Header */}
         <div className="mb-8">
           <div className="text-sm text-sky-500 font-medium mb-2">{post.category}</div>
           <h1 className="text-3xl md:text-4xl font-bold mb-4">{post.title}</h1>
 
-          {post.readTime && (
+          {post.rating && (
             <div className="flex items-center mb-4">
-              <Clock className="h-4 w-4 mr-1 text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">{post.readTime} min read</span>
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  className={`h-5 w-5 ${i < post.rating ? "text-yellow-500 fill-yellow-500" : "text-gray-300"}`}
+                />
+              ))}
+              <span className="ml-2 font-medium">{post.rating}/5</span>
             </div>
           )}
 
@@ -108,164 +113,129 @@ export default function GuideArticlePage({ params }: { params: { subcategory: st
 
         {/* Ad Banner after featured image */}
         <div className="mb-8">
-          <AdBanner size="970x90" id="guide-top-leaderboard" />
+          <AdBanner size="970x90" id="review-top-leaderboard" />
         </div>
 
-        {/* Table of Contents */}
+        {/* Review Summary */}
         <div className="bg-gray-50 p-6 rounded-lg mb-8">
-          <h2 className="text-xl font-bold mb-4">Table of Contents</h2>
-          <ol className="space-y-2">
-            <li>
-              <a href="#introduction" className="text-sky-600 hover:underline">
-                Introduction
-              </a>
-            </li>
-            <li>
-              <a href="#getting-started" className="text-sky-600 hover:underline">
-                Getting Started
-              </a>
-            </li>
-            <li>
-              <a href="#basic-techniques" className="text-sky-600 hover:underline">
-                Basic Techniques
-              </a>
-            </li>
-            <li>
-              <a href="#advanced-tips" className="text-sky-600 hover:underline">
-                Advanced Tips
-              </a>
-            </li>
-            <li>
-              <a href="#troubleshooting" className="text-sky-600 hover:underline">
-                Troubleshooting
-              </a>
-            </li>
-            <li>
-              <a href="#conclusion" className="text-sky-600 hover:underline">
-                Conclusion
-              </a>
-            </li>
-          </ol>
+          <h2 className="text-xl font-bold mb-4">Review Summary</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="font-bold mb-2">Pros</h3>
+              <ul className="space-y-2">
+                <li className="flex items-start">
+                  <span className="text-green-500 mr-2">✓</span>
+                  <span>Exceptional performance and speed</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-500 mr-2">✓</span>
+                  <span>Outstanding build quality and design</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-500 mr-2">✓</span>
+                  <span>Improved battery life over previous models</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-500 mr-2">✓</span>
+                  <span>Excellent ecosystem integration</span>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-bold mb-2">Cons</h3>
+              <ul className="space-y-2">
+                <li className="flex items-start">
+                  <span className="text-red-500 mr-2">✗</span>
+                  <span>Premium price point</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-red-500 mr-2">✗</span>
+                  <span>Limited customization options</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-red-500 mr-2">✗</span>
+                  <span>Some features require additional Apple products</span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
 
-        {/* Guide Content - First Part */}
+        {/* Review Content - First Part */}
         <div className="prose prose-lg max-w-none">
           <p className="lead">{post.excerpt}</p>
 
-          <h2 id="introduction">Introduction</h2>
+          <h2>Design and Build Quality</h2>
 
           <p>
-            Apple devices offer powerful capabilities that can significantly enhance your productivity, creativity, or
-            technical skills. This guide will walk you through everything you need to know to master these features and
-            get the most out of your Apple products.
+            Apple's attention to detail is evident in every aspect of this product's design. The premium materials and
+            precise manufacturing result in a device that not only looks stunning but feels substantial and durable in
+            hand.
           </p>
 
           <p>
-            Whether you're a beginner just getting started or an experienced user looking to deepen your knowledge,
-            you'll find valuable information and practical tips that you can apply immediately.
+            The refined aesthetic builds upon Apple's design language while introducing subtle improvements that enhance
+            both form and function. Every element serves a purpose, reflecting the company's commitment to thoughtful
+            design.
           </p>
-
-          <h2 id="getting-started">Getting Started</h2>
-
-          <p>
-            Before diving into advanced techniques, it's important to ensure you have the basics covered. Make sure your
-            device is updated to the latest software version to access all available features and security improvements.
-          </p>
-
-          <div className="bg-blue-50 p-4 rounded-md border border-blue-100 my-6">
-            <h4 className="text-blue-800 font-medium mb-2">Pro Tip</h4>
-            <p className="text-blue-700 text-sm m-0">
-              To check for software updates, go to Settings > General > Software Update. Enabling automatic updates
-              ensures you always have the latest features and security patches.
-            </p>
-          </div>
         </div>
 
         {/* Mid-article ad */}
         <div className="my-8 flex justify-center">
-          <AdBanner size="480x280" id="guide-mid-rectangle" />
+          <AdBanner size="480x280" id="review-mid-rectangle" />
         </div>
 
-        {/* Guide Content - Second Part */}
+        {/* Review Content - Second Part */}
         <div className="prose prose-lg max-w-none">
-          <p>
-            Familiarize yourself with the fundamental controls and navigation gestures for your device. These basics
-            form the foundation for more advanced interactions and will make your experience more intuitive.
-          </p>
-
-          <h2 id="basic-techniques">Basic Techniques</h2>
+          <h2>Performance and Features</h2>
 
           <p>
-            Now that you're set up, let's explore some essential techniques that will improve your efficiency and
-            experience with your Apple device:
-          </p>
-
-          <ol>
-            <li>
-              <strong>Customize your settings</strong> - Take time to adjust settings according to your preferences and
-              needs. This includes display brightness, notification preferences, and privacy controls.
-            </li>
-            <li>
-              <strong>Learn keyboard shortcuts</strong> - If you're using a Mac or iPad with a keyboard, mastering
-              keyboard shortcuts can significantly speed up your workflow.
-            </li>
-            <li>
-              <strong>Organize your home screen</strong> - Arrange apps in a way that makes sense for how you use your
-              device. Consider creating folders for related apps to reduce clutter.
-            </li>
-            <li>
-              <strong>Set up Focus modes</strong> - Configure different Focus modes for various activities to minimize
-              distractions and stay productive.
-            </li>
-          </ol>
-
-          <h2 id="advanced-tips">Advanced Tips</h2>
-
-          <p>
-            Once you've mastered the basics, these advanced techniques will help you take full advantage of your Apple
-            device's capabilities:
-          </p>
-
-          <p>[Detailed advanced tips would be included here, specific to the guide topic]</p>
-
-          <h2 id="troubleshooting">Troubleshooting</h2>
-
-          <p>Even with the best preparation, you might encounter issues. Here are solutions to common problems:</p>
-
-          <div className="bg-amber-50 p-4 rounded-md border border-amber-100 my-6">
-            <h4 className="text-amber-800 font-medium mb-2">Common Issue</h4>
-            <p className="text-amber-700 text-sm m-0">
-              If your device becomes unresponsive, try a force restart. For most recent iPhones, press and quickly
-              release the volume up button, press and quickly release the volume down button, then press and hold the
-              side button until the Apple logo appears.
-            </p>
-          </div>
-
-          <p>[Additional troubleshooting tips would be included here]</p>
-
-          <h2 id="conclusion">Conclusion</h2>
-
-          <p>
-            By following this guide, you've gained valuable knowledge that will help you get the most out of your Apple
-            device. Remember that mastery comes with practice, so don't hesitate to experiment with these techniques in
-            your daily use.
+            Performance is where this product truly shines. The hardware specifications translate to real-world benefits
+            that users will notice in everyday use, from faster app launches to smoother multitasking.
           </p>
 
           <p>
-            As Apple continues to update and improve their products, stay curious and open to learning new features and
-            capabilities. The investment in understanding your device will pay dividends in productivity, creativity,
-            and enjoyment.
+            New features add genuine value rather than simply serving as marketing points. Apple has clearly considered
+            how users interact with their devices and implemented capabilities that address actual needs and enhance the
+            overall experience.
+          </p>
+
+          <h2>User Experience</h2>
+
+          <p>
+            The seamless integration with Apple's ecosystem remains a significant advantage. For those already invested
+            in Apple products, the additional convenience and functionality are substantial benefits that competitors
+            struggle to match.
+          </p>
+
+          <p>
+            Software optimization ensures that the hardware capabilities are fully utilized, resulting in a responsive
+            and intuitive experience. Apple's focus on the details of user interaction is evident throughout.
+          </p>
+
+          <h2>Value and Conclusion</h2>
+
+          <p>
+            While the premium pricing may deter some potential buyers, the combination of performance, design, and
+            ecosystem benefits provides strong value for those who can justify the investment. The longevity of Apple
+            products also factors into the value equation.
+          </p>
+
+          <p>
+            Overall, this product represents another strong entry in Apple's lineup. It successfully balances innovation
+            with refinement, delivering meaningful improvements while maintaining the qualities that have made Apple
+            products so popular.
           </p>
         </div>
 
         {/* Large ad at end of article */}
         <div className="my-12 flex justify-center">
-          <AdBanner size="800x600" id="guide-end-large-rectangle" />
+          <AdBanner size="800x600" id="review-end-large-rectangle" />
         </div>
 
-        {/* Guide Footer */}
+        {/* Review Footer */}
         <div className="mt-12 pt-8 border-t">
-          <h3 className="text-xl font-bold mb-4">Related Guides</h3>
+          <h3 className="text-xl font-bold mb-4">Related Reviews</h3>
           <div className="grid md:grid-cols-3 gap-6">
             {relatedPosts.map((relatedPost) => (
               <div key={relatedPost.slug} className="border rounded-lg overflow-hidden">
@@ -279,9 +249,9 @@ export default function GuideArticlePage({ params }: { params: { subcategory: st
                 </div>
                 <div className="p-4">
                   <h4 className="font-bold mb-2">{relatedPost.title}</h4>
-                  <Link href={`/guides/${params.subcategory}/${relatedPost.slug}`}>
+                  <Link href={`/reviews/${params.subcategory}/${relatedPost.slug}`}>
                     <Button variant="outline" size="sm">
-                      Read Guide
+                      Read Review
                     </Button>
                   </Link>
                 </div>
