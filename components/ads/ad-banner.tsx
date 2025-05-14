@@ -1,4 +1,4 @@
-type AdSize = "970x90" | "300x250" | "480x280" | "800x600";
+type AdSize = "728x90" | "300x250" | "480x280" | "800x600";
 
 interface AdBannerProps {
   size: AdSize;
@@ -13,9 +13,24 @@ export function AdBanner({ size, className = "", id }: AdBannerProps) {
   return (
     <div
       id={id}
-      className={`bg-gray-100 border border-gray-200 flex items-center justify-center mx-auto ${className}`}
+      className={`flex items-center justify-center mx-auto overflow-hidden ${className}`}
       style={{ width, height, maxWidth: "100%" }}
     >
+
+      {/** Show the iframe ad for 728x90 */}
+      {size === "728x90" && (
+        <iframe
+          id="iframe_446"
+          src="//a.impactradius-go.com/gen-ad-code/2406390/2919208/13094/"
+          width="728"
+          height="90"
+          scrolling="no"
+          frameBorder="0"
+          marginHeight={0}
+          marginWidth={0}
+        ></iframe>
+      )}
+      
       {/** Show the iframe ad only for 300x250 (if applicable) */}
       {size === "300x250" && (
         <iframe

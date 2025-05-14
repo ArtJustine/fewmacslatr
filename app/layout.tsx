@@ -26,12 +26,12 @@ export default function RootLayout({
           <Header />
           {/* Leaderboard ad below header */}
           <div className="container py-4">
-            <AdBanner size="970x90" id="header-leaderboard" />
+            <AdBanner size="728x90" id="header-leaderboard" />
           </div>
           <main>{children}</main>
           {/* Leaderboard ad above footer */}
           <div className="container py-4">
-            <AdBanner size="970x90" id="footer-leaderboard" />
+            <AdBanner size="728x90" id="footer-leaderboard" />
           </div>
           <Footer />
         </ThemeProvider>

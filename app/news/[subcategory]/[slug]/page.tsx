@@ -100,7 +100,7 @@ export default function NewsArticlePage({ params }: { params: { subcategory: str
 
         {/* Ad Banner after featured image */}
         <div className="mb-8">
-          <AdBanner size="970x90" id="article-top-leaderboard" />
+          <AdBanner size="728x90" id="article-top-leaderboard" />
         </div>
 
         {/* Article Content */}

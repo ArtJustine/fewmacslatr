@@ -33,6 +33,15 @@ export const newsPosts: Post[] = [
     </p>
   
     <h3 class="text-xl font-semibold mb-3">What’s New</h3>
+
+    <div class="my-8">
+      <img 
+        src="/accessibility-reader-ios19.webp?height=400&width=800" 
+        alt="Accessibility Reader In iOS 19" 
+        class="w-full rounded-lg shadow-md"
+      />
+      <p class="text-sm text-gray-600 mt-2 italic">Apple's upcoming accessibility features will span across all their platforms.</p>
+    </div>
   
     <h4 class="text-lg font-semibold mt-6 mb-2">Accessibility Nutrition Labels</h4>
     <p class="mb-4">New App Store labels will show which accessibility features an app supports—like VoiceOver, Larger Text, or captions—so users can quickly identify compatible apps.</p>
@@ -42,9 +51,6 @@ export const newsPosts: Post[] = [
   
     <h4 class="text-lg font-semibold mt-6 mb-2">Accessibility Reader</h4>
     <p class="mb-4">This cross-platform tool helps those with dyslexia or low vision. You can change fonts, spacing, colors, or have the content read aloud—even real-world text using your camera.</p>
-  
-    <h4 class="text-lg font-semibold mt-6 mb-2">Live Captions on Apple Watch</h4>
-    <p class="mb-4">Live captions will show spoken words directly on your Apple Watch, making conversations easier to follow for those with hearing difficulties.</p>
   
     <h4 class="text-lg font-semibold mt-6 mb-2">Braille Access</h4>
     <p class="mb-4">Full braille support allows users to write notes, open BRF files, and do math with Nemeth Braille using an on-screen or physical braille keyboard.</p>
@@ -57,6 +63,17 @@ export const newsPosts: Post[] = [
   
     <h4 class="text-lg font-semibold mt-6 mb-2">Vision Pro Updates</h4>
     <p class="mb-4">Zoom in with the main camera, use VoiceOver to describe environments, and let developers build real-time assistive apps using Vision Pro’s sensors.</p>
+
+        <h4 class="text-lg font-semibold mt-6 mb-2">Live Captions on Apple Watch</h4>
+      <div class="my-8">
+        <img 
+        src="/live-listen-ios19.webp?height=400&width=800" 
+        alt="Live Listen In iOS 19 for Apple Watch" 
+        class="w-full rounded-lg shadow-md"
+        />
+        <p class="text-sm text-gray-600 mt-2 italic">Apple's upcoming accessibility features will span across all their platforms.</p>
+      </div>
+    <p class="mb-4">Live captions will show spoken words directly on your Apple Watch, making conversations easier to follow for those with hearing difficulties.</p>
   
     <h3 class="text-xl font-semibold mt-8 mb-3">More Features</h3>
     <ul class="list-disc list-inside space-y-2 mb-6">
