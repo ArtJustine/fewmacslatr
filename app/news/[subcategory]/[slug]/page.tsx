@@ -103,67 +103,75 @@ export default function NewsArticlePage({ params }: { params: { subcategory: str
           <AdBanner size="970x90" id="article-top-leaderboard" />
         </div>
 
-        {/* Article Content - First Part */}
-        <div className="prose prose-lg max-w-none">
-          <p className="lead">{post.excerpt}</p>
+        {/* Article Content */}
+        {post.content ? (
+          <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
+        ) : (
+          <div className="prose prose-lg max-w-none">
+            <p className="lead">{post.excerpt}</p>
 
-          <p>
-            Apple has consistently been at the forefront of technological innovation, and their latest announcement
-            continues this tradition. The new features and capabilities introduced in this update represent a
-            significant step forward for the company and its users.
-          </p>
+            <p>
+              Apple has consistently been at the forefront of technological innovation, and their latest announcement
+              continues this tradition. The new features and capabilities introduced in this update represent a
+              significant step forward for the company and its users.
+            </p>
 
-          <p>
-            Industry analysts have responded positively to the news, with many highlighting the potential impact on both
-            consumer experience and the broader technology landscape. "This development demonstrates Apple's commitment
-            to pushing boundaries while maintaining their focus on user experience," noted one expert.
-          </p>
+            <p>
+              Industry analysts have responded positively to the news, with many highlighting the potential impact on both
+              consumer experience and the broader technology landscape. "This development demonstrates Apple's commitment
+              to pushing boundaries while maintaining their focus on user experience," noted one expert.
+            </p>
 
-          <h2>Key Highlights</h2>
+            <h2>Key Highlights</h2>
 
-          <p>The announcement includes several noteworthy elements that deserve special attention:</p>
+            <p>The announcement includes several noteworthy elements that deserve special attention:</p>
 
-          <ul>
-            <li>Enhanced performance capabilities that significantly improve user experience</li>
-            <li>New design elements that reflect Apple's commitment to aesthetic excellence</li>
-            <li>Expanded functionality that addresses common user needs and requests</li>
-            <li>Improved integration with existing Apple services and products</li>
-          </ul>
-        </div>
+            <ul>
+              <li>Enhanced performance capabilities that significantly improve user experience</li>
+              <li>New design elements that reflect Apple's commitment to aesthetic excellence</li>
+              <li>Expanded functionality that addresses common user needs and requests</li>
+              <li>Improved integration with existing Apple services and products</li>
+            </ul>
 
-        {/* Mid-article ad */}
-        <div className="my-8 flex justify-center">
-          <AdBanner size="480x280" id="article-mid-rectangle" />
-        </div>
+            {/* Mid-article ad */}
+            <div className="my-8 flex justify-center">
+              <AdBanner size="480x280" id="article-mid-rectangle" />
+            </div>
 
-        {/* Article Content - Second Part */}
-        <div className="prose prose-lg max-w-none">
-          <p>
-            These improvements build upon Apple's existing ecosystem while introducing new possibilities for developers
-            and users alike. The company's approach combines innovation with refinement, ensuring that new features
-            enhance rather than complicate the user experience.
-          </p>
+            <p>
+              These improvements build upon Apple's existing ecosystem while introducing new possibilities for developers
+              and users alike. The company's approach combines innovation with refinement, ensuring that new features
+              enhance rather than complicate the user experience.
+            </p>
 
-          <h2>Looking Ahead</h2>
+            <h2>Looking Ahead</h2>
 
-          <p>
-            As Apple continues to develop and expand its product lineup, we can expect to see further innovations that
-            build upon this foundation. The company's roadmap suggests a focus on seamless integration, enhanced
-            performance, and new capabilities that leverage emerging technologies.
-          </p>
+            <p>
+              As Apple continues to develop and expand its product lineup, we can expect to see further innovations that
+              build upon this foundation. The company's roadmap suggests a focus on seamless integration, enhanced
+              performance, and new capabilities that leverage emerging technologies.
+            </p>
 
-          <p>
-            For users, these developments promise an increasingly intuitive and powerful experience across Apple's range
-            of devices and services. The ecosystem approach remains central to Apple's strategy, with each new product
-            or feature designed to complement and enhance the others.
-          </p>
+            <p>
+              For users, these developments promise an increasingly intuitive and powerful experience across Apple's range
+              of devices and services. The ecosystem approach remains central to Apple's strategy, with each new product
+              or feature designed to complement and enhance the others.
+            </p>
 
-          <p>
-            We'll continue to monitor these developments and provide updates as more information becomes available. Stay
-            tuned for in-depth analysis and expert perspectives on what these changes mean for Apple users and the
-            technology industry as a whole.
-          </p>
-        </div>
+            <p>
+              We'll continue to monitor these developments and provide updates as more information becomes available. Stay
+              tuned for in-depth analysis and expert perspectives on what these changes mean for Apple users and the
+              technology industry as a whole.
+            </p>
+          </div>
+        )}
+
+        {/* Only show mid-article ad if there's no custom content */}
+        {!post.content && (
+          <div className="my-8 flex justify-center">
+            <AdBanner size="480x280" id="article-mid-rectangle" />
+          </div>
+        )}
 
         {/* Large ad at end of article */}
         <div className="my-12 flex justify-center">
@@ -200,4 +208,3 @@ export default function NewsArticlePage({ params }: { params: { subcategory: str
     </div>
   )
 }
-

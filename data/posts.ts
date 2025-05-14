@@ -15,15 +15,62 @@ export interface Post {
 // News Posts
 export const newsPosts: Post[] = [
   {
-    slug: "apple-announces-m3-macbook-pro",
-    title: "Apple Announces New MacBook Pro with M3 Chip",
+    slug: "apple-accessibility-features-ios19",
+    title: "Apple Previews New Accessibility Features and More Coming to iOS 19",
     excerpt:
-      "Apple has unveiled its latest MacBook Pro lineup featuring the new M3 chip, promising significant performance improvements and enhanced battery life.",
-    author: "John Smith",
-    date: "March 15, 2025",
-    image: "/placeholder.svg?height=500&width=800",
-    category: "Product Launch",
-    subcategory: "mac",
+      "Apple just announced a bunch of new accessibility features that are coming later this year.",
+    author: "Art Gonzales",
+    date: "May 14, 2025",
+    image: "/apple-previews-new-features-ios19.jpg?height=500&width=800",
+    category: "iOS",
+    subcategory: "iphone",
+    content: `<h2 class="text-2xl font-bold mb-4">Apple’s Big Accessibility Push</h2>
+    <p class="mb-4">
+      Apple just announced a bunch of new accessibility features that are coming later this year. These updates will be available on the iPhone, iPad, Mac, Apple Watch, and Apple Vision Pro. The news comes just ahead of Global Accessibility Awareness Day and marks 40 years since Apple started working on accessibility in 1985.
+    </p>
+    <p class="mb-6">
+      The new features are expected to roll out with the next major software updates—iOS 19, iPadOS 19, macOS 16, watchOS 12, and visionOS 3—which Apple will talk more about at their big WWDC event on June 9. The updates will likely be available to everyone in September after a few months of testing.
+    </p>
+  
+    <h3 class="text-xl font-semibold mb-3">What’s New</h3>
+  
+    <h4 class="text-lg font-semibold mt-6 mb-2">Accessibility Nutrition Labels</h4>
+    <p class="mb-4">New App Store labels will show which accessibility features an app supports—like VoiceOver, Larger Text, or captions—so users can quickly identify compatible apps.</p>
+  
+    <h4 class="text-lg font-semibold mt-6 mb-2">Magnifier App for Mac</h4>
+    <p class="mb-4">The Magnifier app is coming to Mac, letting users zoom in on objects and text using an iPhone or USB camera. The feed can be adjusted with brightness, contrast, and color filters.</p>
+  
+    <h4 class="text-lg font-semibold mt-6 mb-2">Accessibility Reader</h4>
+    <p class="mb-4">This cross-platform tool helps those with dyslexia or low vision. You can change fonts, spacing, colors, or have the content read aloud—even real-world text using your camera.</p>
+  
+    <h4 class="text-lg font-semibold mt-6 mb-2">Live Captions on Apple Watch</h4>
+    <p class="mb-4">Live captions will show spoken words directly on your Apple Watch, making conversations easier to follow for those with hearing difficulties.</p>
+  
+    <h4 class="text-lg font-semibold mt-6 mb-2">Braille Access</h4>
+    <p class="mb-4">Full braille support allows users to write notes, open BRF files, and do math with Nemeth Braille using an on-screen or physical braille keyboard.</p>
+  
+    <h4 class="text-lg font-semibold mt-6 mb-2">Personal Voice</h4>
+    <p class="mb-4">Generate a personalized digital voice in under a minute by recording just 10 short phrases. The feature now supports Spanish (Mexico) and sounds more natural.</p>
+  
+    <h4 class="text-lg font-semibold mt-6 mb-2">CarPlay and Sound Recognition</h4>
+    <p class="mb-4">CarPlay will feature larger text, and Apple’s sound recognition system now detects sounds like crying babies or sirens for real-time alerts.</p>
+  
+    <h4 class="text-lg font-semibold mt-6 mb-2">Vision Pro Updates</h4>
+    <p class="mb-4">Zoom in with the main camera, use VoiceOver to describe environments, and let developers build real-time assistive apps using Vision Pro’s sensors.</p>
+  
+    <h3 class="text-xl font-semibold mt-8 mb-3">More Features</h3>
+    <ul class="list-disc list-inside space-y-2 mb-6">
+      <li>Customizable background sounds with auto-stop options</li>
+      <li>Vehicle Motion Cues on Mac to reduce motion sickness</li>
+      <li>Improvements to Eye and Head Tracking controls</li>
+      <li>Switch Control support for Brain Computer Interfaces (BCIs)</li>
+    </ul>
+  
+    <h3 class="text-xl font-semibold mt-8 mb-3">Wrapping Up</h3>
+    <p class="mb-4">
+      Apple continues building features for users with vision, hearing, mobility, and speech challenges. Expect more details at WWDC on June 9.
+    </p>
+  `
   },
   {
     slug: "ios-18-features-leak",

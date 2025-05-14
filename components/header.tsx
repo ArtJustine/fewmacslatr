@@ -12,8 +12,8 @@ export default function Header() {
     <header className="border-b sticky top-0 bg-white z-50">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-6">
-          <Link href="/" className="font-bold text-2xl">
-            Few Macs <span className="text-sky-500">Latr</span>
+          <Link href="/">
+            <img src="/fewmacslatr.png" alt="Few Macs Latr" className="h-10" />
           </Link>
           <nav className="hidden md:flex items-center gap-8">
             <Link href="/news" className="text-sm font-medium hover:text-sky-500 transition-colors">

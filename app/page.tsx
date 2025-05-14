@@ -17,10 +17,10 @@ export default function Home() {
             <span className="inline-block px-3 py-1 bg-sky-100 text-sky-800 rounded-full text-xs font-medium">
               LATEST NEWS
             </span>
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Discover the Latest in Apple Innovations</h1>
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Discover the Latest in Apple</h1>
             <p className="text-gray-400 mb-6 max-w-md">
               Your trusted source for the latest Apple news, in-depth reviews, helpful guides, and exclusive deals on
-              Apple products.
+              Apple products/devices.
             </p>
             <div className="flex gap-3">
               <Link href="/news">
