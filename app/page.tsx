@@ -34,7 +34,7 @@ export default function Home() {
             </div>
           </div>
           <div className="relative h-[250px] md:h-[350px] rounded-xl overflow-hidden shadow-lg">
-            <Image src="/placeholder.svg?height=350&width=600" alt="Apple Innovation" fill className="object-cover" />
+            <Image src="/apple.webp?height=350&width=600" alt="Apple Innovation" fill className="object-cover" />
           </div>
         </div>
       </section>
